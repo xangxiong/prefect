@@ -9,17 +9,20 @@ from typing import Callable, Type
 from prefect.orion.database.configurations import (
     AioSqliteConfiguration,
     AsyncPostgresConfiguration,
+    AsyncCockroachdbConfiguration,
     BaseDatabaseConfiguration,
 )
 from prefect.orion.database.interface import OrionDBInterface
 from prefect.orion.database.orm_models import (
     AioSqliteORMConfiguration,
     AsyncPostgresORMConfiguration,
+    AsyncCockroachdbORMConfiguration,
     BaseORMConfiguration,
 )
 from prefect.orion.database.query_components import (
     AioSqliteQueryComponents,
     AsyncPostgresQueryComponents,
+    AsyncCockroachdbQueryComponents,
     BaseQueryComponents,
 )
 from prefect.orion.utilities.database import get_dialect
@@ -52,6 +55,8 @@ def provide_database_interface() -> OrionDBInterface:
 
         if dialect.name == "postgresql":
             database_config = AsyncPostgresConfiguration(connection_url=connection_url)
+        elif dialect.name == "cockroachdb":
+            database_config = AsyncCockroachdbConfiguration(connection_url=connection_url)
         elif dialect.name == "sqlite":
             database_config = AioSqliteConfiguration(connection_url=connection_url)
         else:
@@ -64,6 +69,8 @@ def provide_database_interface() -> OrionDBInterface:
     if query_components is None:
         if dialect.name == "postgresql":
             query_components = AsyncPostgresQueryComponents()
+        elif dialect.name == "cockroachdb":
+            query_components = AsyncCockroachdbQueryComponents()
         elif dialect.name == "sqlite":
             query_components = AioSqliteQueryComponents()
         else:
@@ -76,6 +83,8 @@ def provide_database_interface() -> OrionDBInterface:
     if orm is None:
         if dialect.name == "postgresql":
             orm = AsyncPostgresORMConfiguration()
+        elif dialect.name == "cockroachdb":
+            orm = AsyncCockroachdbORMConfiguration()
         elif dialect.name == "sqlite":
             orm = AioSqliteORMConfiguration()
         else:

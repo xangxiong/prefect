@@ -164,6 +164,10 @@ class AsyncPostgresConfiguration(BaseDatabaseConfiguration):
         return False
 
 
+class AsyncCockroachdbConfiguration(AsyncPostgresConfiguration):
+    pass
+
+
 class AioSqliteConfiguration(BaseDatabaseConfiguration):
 
     ENGINES: Dict[Tuple[AbstractEventLoop, str, bool, float], AsyncEngine] = {}

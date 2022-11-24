@@ -1354,6 +1354,18 @@ class AsyncPostgresORMConfiguration(BaseORMConfiguration):
             / "postgresql"
         )
 
+class AsyncCockroachdbORMConfiguration(BaseORMConfiguration):
+    """Cockroachdb specific orm configuration"""
+
+    @property
+    def versions_dir(self) -> Path:
+        """Directory containing migrations"""
+        return (
+            Path(prefect.orion.database.__file__).parent
+            / "migrations"
+            / "versions"
+            / "cockroachdb"
+        )
 
 class AioSqliteORMConfiguration(BaseORMConfiguration):
     """SQLite specific orm configuration"""

@@ -550,6 +550,12 @@ class AsyncPostgresQueryComponents(BaseQueryComponents):
         result = await session.execute(notification_details_stmt)
         return result.fetchall()
 
+class AsyncCockroachdbQueryComponents(AsyncPostgresQueryComponents):
+    # --- Cockroachdb-specific SqlAlchemy bindings
+    
+    def insert(self, obj):
+        return postgresql.insert(obj)
+
 
 class AioSqliteQueryComponents(BaseQueryComponents):
     # --- Sqlite-specific SqlAlchemy bindings
